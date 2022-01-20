@@ -1,49 +1,52 @@
 cmake_minimum_required(VERSION 3.00)
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/symbian-6.1-series60-toolchain.cmake)
 
-project(ESDL CXX)
+project(SDL CXX)
 
 set(GCC_COMN_DEFS -D__SYMBIAN32__ -D__GCC32__ -D__EPOC32__ -D__MARM__ -D__MARM_ARMI__)
 set(GCC_MODE_DEFS -DNDEBUG -D_UNICODE)
 set(GCC_DEFS      ${GCC_COMN_DEFS} ${GCC_MODE_DEFS})
 
-set(SRC_DIR    "${CMAKE_CURRENT_SOURCE_DIR}/src")
-set(SDL_DIR    "${SRC_DIR}/SDL")
-set(EAUDIO_DIR "${SRC_DIR}/EAudioLib")
+set(SRC_DIR       "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(EAUDIOLIB_DIR "${SRC_DIR}/EAudioLib")
+set(SDL_DIR       "${SRC_DIR}/SDL")
 
 set(EAudioLib_sources
-    "${EAUDIO_DIR}/src/audiolib.cpp"
-    "${EAUDIO_DIR}/src/audioplayer.cpp"
-    "${EAUDIO_DIR}/src/tinysdl.cpp"
-    "${EAUDIO_DIR}/src/audioconvert.cpp"
+    "${EAUDIOLIB_DIR}/src/audiolib.cpp"
+    "${EAUDIOLIB_DIR}/src/audioplayer.cpp"
+    "${EAUDIOLIB_DIR}/src/tinysdl.cpp"
+    "${EAUDIOLIB_DIR}/src/audioconvert.cpp"
     # SDL
-    "${EAUDIO_DIR}/Scumm/backends/sdl/sdl.cpp"
-    "${EAUDIO_DIR}/Scumm/backends/sdl/sdl-common.cpp"
-    "${EAUDIO_DIR}/Scumm/backends/sdl/sdl-symbian.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/backends/sdl/sdl.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/backends/sdl/sdl-common.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/backends/sdl/sdl-symbian.cpp"
     # AUDIO
-    "${EAUDIO_DIR}/Scumm/sound/audiostream.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/fmopl.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/mididrv.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/midiparser.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/midiparser_smf.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/midiparser_xmidi.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/mixer.cpp"
-    #"${EAUDIO_DIR}/Scumm/sound/mpu401.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/rate.cpp"
-    #"${EAUDIO_DIR}/Scumm/sound/resample.cpp"
-    #"${EAUDIO_DIR}/Scumm/sound/voc.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/midiparser_ro.cpp"
-    "${EAUDIO_DIR}/Scumm/sound/midiparser_eup.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/audiostream.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/fmopl.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/mididrv.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/midiparser.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/midiparser_smf.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/midiparser_xmidi.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/mixer.cpp"
+    #"${EAUDIOLIB_DIR}/Scumm/sound/mpu401.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/rate.cpp"
+    #"${EAUDIOLIB_DIR}/Scumm/sound/resample.cpp"
+    #"${EAUDIOLIB_DIR}/Scumm/sound/voc.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/midiparser_ro.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/sound/midiparser_eup.cpp"
     # ADLIB
-    "${EAUDIO_DIR}/Scumm/backends/midi/adlib.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/backends/midi/adlib.cpp"
     # UTILS
-    "${EAUDIO_DIR}/Scumm/common/util.cpp"
-    "${EAUDIO_DIR}/Scumm/common/timer.cpp"
-    "${EAUDIO_DIR}/Scumm/common/str.cpp"
-    "${EAUDIO_DIR}/Scumm/common/file.cpp"
-    "${EAUDIO_DIR}/Scumm/common/system.cpp")
+    "${EAUDIOLIB_DIR}/Scumm/common/util.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/common/timer.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/common/str.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/common/file.cpp"
+    "${EAUDIOLIB_DIR}/Scumm/common/system.cpp")
 
-set(ESDL_sources
+set(SDLmain_sources
+    "${SDL_DIR}/src/main/epoc/SDL_main.cpp")
+
+set(SDL_sources
     # General sources
     "${SDL_DIR}/src/SDL.c"
     "${SDL_DIR}/src/SDL_error.c"
@@ -98,7 +101,8 @@ set(ESDL_sources
     "${SDL_DIR}/src/file/SDL_rwops.c")
 
 add_library(EAudioLib STATIC ${EAudioLib_sources})
-add_library(${PROJECT_NAME} STATIC ${ESDL_sources})
+add_library(SDLmain STATIC ${SDLmain_sources})
+add_library(${PROJECT_NAME} STATIC ${SDL_sources})
 
 target_compile_definitions(
     EAudioLib
@@ -108,9 +112,19 @@ target_compile_definitions(
 target_include_directories(
     EAudioLib
     PUBLIC
-    ${EAUDIO_DIR}/inc
-    ${EAUDIO_DIR}/Scumm
-    ${EAUDIO_DIR}/Scumm/common)
+    ${EAUDIOLIB_DIR}/inc
+    ${EAUDIOLIB_DIR}/Scumm
+    ${EAUDIOLIB_DIR}/Scumm/common)
+
+target_compile_definitions(
+    SDLmain
+    PUBLIC
+    ${GCC_DEFS})
+
+target_include_directories(
+    SDLmain
+    PUBLIC
+    ${SDL_DIR}/include)
 
 target_compile_definitions(
     ${PROJECT_NAME}
@@ -140,4 +154,4 @@ target_include_directories(
     ${SDL_DIR}/src/joystick
     ${SRC_DIR}/SDL_epocruntime/inc
     ${SRC_DIR}/include
-    ${EAUDIO_DIR}/inc)
+    ${EAUDIOLIB_DIR}/inc)
