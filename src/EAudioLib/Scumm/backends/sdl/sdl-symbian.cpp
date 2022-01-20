@@ -1,0 +1,2 @@
+#include "sdl-symbian.h"
+

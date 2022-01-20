@@ -1,0 +1,3 @@
+EXPORTS
+	GetScreenInfo__12Epoc_RuntimeR14TScreenInfoV01 @ 1 NONAME R3UNUSED ; Epoc_Runtime::GetScreenInfo(TScreenInfoV01 &)
+

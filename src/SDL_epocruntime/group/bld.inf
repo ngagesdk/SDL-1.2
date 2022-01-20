@@ -1,0 +1,13 @@
+PRJ_PLATFORMS
+// list platforms your project supports here
+// default = WINS MARM
+WINS ARM4 ARMI THUMB
+
+PRJ_EXPORTS
+// list each file exported from source on a separate line
+// {<destination>} defaults to \EPOC32\Include\<source file>
+
+
+
+PRJ_MMPFILES
+sdl_epocruntime.mmp

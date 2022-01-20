@@ -1,0 +1,3 @@
+EXPORTS
+	?GetScreenInfo@Epoc_Runtime@@SAXAAVTScreenInfoV01@@@Z @ 1 NONAME ; public: static void __cdecl Epoc_Runtime::GetScreenInfo(class TScreenInfoV01 &)
+

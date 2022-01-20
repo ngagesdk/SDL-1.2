@@ -1,0 +1,36 @@
+TARGET          eaudiolib.lib
+TARGETTYPE      lib
+
+USERINCLUDE     ..\Inc  ..\scumm ..\scumm\common 
+SYSTEMINCLUDE   \epoc32\include \epoc32\include\libc /*\sdl\include*/
+
+
+SOURCEPATH      ..\src
+SOURCE			audiolib.cpp
+SOURCE			audioplayer.cpp
+SoUrCE			tinysdl.cpp
+SOURCE			audioconvert.cpp
+
+//SDL
+SOURCEPATH      ..\scumm\backends\sdl
+SOURCE			sdl.cpp
+SOURCE			sdl-common.cpp
+SOURCE			sdl-symbian.cpp
+
+//AUDIO
+sourcepath ..\scumm\sound
+source audiostream.cpp          fmopl.cpp
+source mididrv.cpp              midiparser.cpp          midiparser_smf.cpp       midiparser_xmidi.cpp
+source mixer.cpp                /*mpu401.cpp*/              rate.cpp
+/*source resample.cpp*/             /*voc.cpp*/                 					
+source midiparser_ro.cpp midiparser_eup.cpp
+
+//ADLIB
+sourcepath  ..\scumm\backends\midi
+source adlib.cpp
+
+//UTILS
+sourcepath ..\scumm\common
+source util.cpp  timer.cpp str.cpp file.cpp system.cpp
+
+//EOF

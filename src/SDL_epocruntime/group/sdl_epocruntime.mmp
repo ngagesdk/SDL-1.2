@@ -1,0 +1,8 @@
+TARGET 		sdl_epocruntime.dll
+TARGETTYPE	dll
+UID 		0x1000008d 0x101f3d6b
+SOURCEPATH  ..\src
+SOURCE		sdl_epocruntime.cpp
+USERINCLUDE ..\inc
+SYSTEMINCLUDE	\epoc32\include
+LIBRARY		euser.lib  hal.lib

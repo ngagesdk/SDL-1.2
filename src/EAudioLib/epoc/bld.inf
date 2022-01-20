@@ -1,0 +1,8 @@
+PRJ_PLATFORMS
+WINS ARMI THUMB
+
+PRJ_MMPFILES
+audiolib.mmp
+
+PRJ_EXPORTS
+..\inc\eaudiolib.h
