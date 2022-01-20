@@ -1,4 +1,4 @@
-# SDL-1.2 for Symbian S60v1
+# SDL 1.2 for Symbian S60v1
 
 Even though SDL 1.2 is outdated and officially no longer supported, this
 is an attempt to get it running on Symbian S60v1 devices such as the
