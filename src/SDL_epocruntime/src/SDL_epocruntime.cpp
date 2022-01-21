@@ -3,7 +3,7 @@
 #include<hal_data.h>
 #include<hal.h>
 
-#define SYMBIAN_70
+//#define SYMBIAN_70
 
 GLDEF_C TInt E32Dll(TDllReason)
 	{
