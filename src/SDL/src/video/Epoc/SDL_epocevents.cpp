@@ -301,7 +301,7 @@ void EPOC_PumpEvents(_THIS)
 }
 
 
-_LIT(KMapFileName, "C:\\sdl_info\\sdlkeymap.cfg");
+/*_LIT(KMapFileName, "C:\\sdl_info\\sdlkeymap.cfg");
 LOCAL_C void ReadL(RFs& aFs, RArray<TInt>& aArray)
     {
     TInt drive = -1;
@@ -337,7 +337,7 @@ LOCAL_C void ReadL(RFs& aFs, RArray<TInt>& aArray)
         }
     CleanupStack::PopAndDestroy();
     }
-
+*/
 
 void EPOC_InitOSKeymap(_THIS)
 {
@@ -436,7 +436,7 @@ void EPOC_InitOSKeymap(_THIS)
 
     ///////////////////////////////////////////////////////////
 
-    RFs fs;
+/*    RFs fs;
     if(KErrNone == fs.Connect())
         {
         RArray<TInt> array;
@@ -460,7 +460,7 @@ void EPOC_InitOSKeymap(_THIS)
         array.Close();
         }
 
-    fs.Close();
+    fs.Close();*/
     ///////////////////////////////////////////////////////////
 
     /* !!TODO
