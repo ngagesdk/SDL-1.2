@@ -10,7 +10,13 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "variables": []
+      "variables": [
+        {
+          "name": "INSTALL_APP",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
     }
   ]
 }

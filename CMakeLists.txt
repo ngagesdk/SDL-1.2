@@ -1,15 +1,47 @@
 cmake_minimum_required(VERSION 3.00)
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/symbian-6.1-series60-toolchain.cmake)
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/symbian-6.1-series60-toolchain.cmake)
 
-project(SDL CXX)
+project(xflame C CXX)
 
-set(GCC_COMN_DEFS -D__SYMBIAN32__ -D__GCC32__ -D__EPOC32__ -D__MARM__ -D__MARM_ARMI__)
-set(GCC_MODE_DEFS -DNDEBUG -D_UNICODE)
-set(GCC_DEFS      ${GCC_COMN_DEFS} ${GCC_MODE_DEFS})
+set(MMC_DRIVE_LETTER "E")
+
+# Use CMake or Visual Studio to enable these settings.
+option(INSTALL_APP "Install app on MMC" OFF)
+
+set(UID1_GW 0x1000007a) # KExecutableImageUidValue, e32uid.h
+set(UID1_ER 0x1000008d) # KSharedLibraryUidValue, e32uid.h
+set(UID2    0x100039ce) # KAppUidValue16, apadef.h
+set(UID3_GW 0x10005b95) # xflame UID
+set(UID3_ER 0x101f3d6b) # EpocRuntime UID
+
+set(GCC_COMN_DEFS     -D__SYMBIAN32__ -D__GCC32__ -D__EPOC32__ -D__MARM__ -D__MARM_ARMI__)
+set(GCC_MODE_DEFS     -DNDEBUG -D_UNICODE)
+set(GCC_DEFS          ${GCC_COMN_DEFS} ${GCC_MODE_DEFS})
 
 set(SRC_DIR       "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(EAUDIOLIB_DIR "${SRC_DIR}/EAudioLib")
 set(SDL_DIR       "${SRC_DIR}/SDL")
+
+set(xflame_libs
+    ${CMAKE_CURRENT_BINARY_DIR}/libSDL.a
+    ${CMAKE_CURRENT_BINARY_DIR}/libSDLmain.a
+    ${CMAKE_CURRENT_BINARY_DIR}/libEAudioLib.a
+    ${CMAKE_CURRENT_BINARY_DIR}/libEpocRuntime.a
+    ${EPOC_LIB}/egcc.lib
+    ${EPOC_LIB}/euser.lib
+    ${EPOC_LIB}/estlib.lib
+    ${EPOC_LIB}/ws32.lib
+    ${EPOC_LIB}/hal.lib
+    ${EPOC_LIB}/gdi.lib
+    ${EPOC_LIB}/mediaclientaudiostream.lib
+    ${EPOC_LIB}/bafl.lib
+    ${EPOC_LIB}/efsrv.lib
+    ${EPOC_LIB}/flogger.lib
+    ${EPOC_LIB}/scdv.lib)
+
+set(xflame_sources
+    "${SRC_DIR}/xflame.c")
+#    "${SDL_DIR}/test/graywin.c")
 
 set(EAudioLib_sources
     "${EAUDIOLIB_DIR}/src/audiolib.cpp"
@@ -42,6 +74,13 @@ set(EAudioLib_sources
     "${EAUDIOLIB_DIR}/Scumm/common/str.cpp"
     "${EAUDIOLIB_DIR}/Scumm/common/file.cpp"
     "${EAUDIOLIB_DIR}/Scumm/common/system.cpp")
+
+set(EpocRuntime_libs
+    ${EPOC_LIB}/euser.lib
+    ${EPOC_LIB}/hal.lib)
+
+set(EpocRuntime_sources
+    "${SRC_DIR}/SDL_epocruntime/src/SDL_epocruntime.cpp")
 
 set(SDLmain_sources
     "${SDL_DIR}/src/main/epoc/SDL_main.cpp")
@@ -100,9 +139,48 @@ set(SDL_sources
     # File sources
     "${SDL_DIR}/src/file/SDL_rwops.c")
 
-add_library(EAudioLib STATIC ${EAudioLib_sources})
-add_library(SDLmain STATIC ${SDLmain_sources})
-add_library(${PROJECT_NAME} STATIC ${SDL_sources})
+add_library(EAudioLib   STATIC ${EAudioLib_sources})
+add_library(EpocRuntime STATIC ${EpocRuntime_sources})
+add_library(SDLmain     STATIC ${SDLmain_sources})
+add_library(SDL         STATIC ${SDL_sources})
+add_library(xflame     STATIC ${xflame_sources})
+
+build_exe(${PROJECT_NAME} exe ${UID1_GW} ${UID2} ${UID3_GW} "${xflame_libs}")
+build_dll(arm_interwork EpocRuntime dll ${UID1_ER} ${UID2} ${UID3_ER} "${EpocRuntime_libs}")
+
+if(INSTALL_APP)
+    install_file(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR} xflame.exe      ${MMC_DRIVE_LETTER})
+    install_file(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR} EpocRuntime.dll ${MMC_DRIVE_LETTER})
+endif()
+
+add_dependencies(
+    xflame
+    EAudioLib
+    EpocRuntime
+    SDLmain
+    SDL)
+
+add_dependencies(
+    xflame.exe
+    xflame)
+
+target_compile_definitions(
+    xflame
+    PUBLIC
+    __EXE__
+    ${GCC_DEFS}
+    UID1=${UID1_GW}
+    UID2=${UID2}
+    UID3=${UID3_GW})
+
+target_include_directories(
+    xflame
+    PUBLIC
+    ${SDL_DIR}/include)
+
+target_link_libraries(
+    xflame
+    ${xflame_libs})
 
 target_compile_definitions(
     EAudioLib
@@ -117,6 +195,16 @@ target_include_directories(
     ${EAUDIOLIB_DIR}/Scumm/common)
 
 target_compile_definitions(
+    EpocRuntime
+    PUBLIC
+    ${GCC_DEFS})
+
+target_include_directories(
+    EpocRuntime
+    PUBLIC
+    ${SRC_DIR}/SDL_epocruntime/inc)
+
+target_compile_definitions(
     SDLmain
     PUBLIC
     ${GCC_DEFS})
@@ -127,7 +215,7 @@ target_include_directories(
     ${SDL_DIR}/include)
 
 target_compile_definitions(
-    ${PROJECT_NAME}
+    SDL
     PUBLIC
     SYMBIAN_SERIES60
     NO_SIGNAL_H
@@ -137,7 +225,7 @@ target_compile_definitions(
     ${GCC_DEFS})
 
 target_include_directories(
-    ${PROJECT_NAME}
+    SDL
     PUBLIC
     ${SDL_DIR}/include
     ${SDL_DIR}/src/
