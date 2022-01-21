@@ -20,11 +20,12 @@ invited to visit our small online community. You can find us on
 
 ## How-to
 
-Clone this project into the root directory of the toolchain:
+Clone this project into the projects sub-directory of the toolchain:
 
 ```bash
 git clone https://github.com/mupfelofen-de/symbian-s60v1-toolchain.git
 cd symbian-s60v1-toolchain
+cd projects
 git clone https://github.com/mupfelofen-de/symbian-s60v1-SDL-1.2.git
 ```
 
