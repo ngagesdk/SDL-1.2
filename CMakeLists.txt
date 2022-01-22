@@ -14,9 +14,9 @@ set(UID2    0x100039ce) # KAppUidValue16, apadef.h
 set(UID3_GW 0x10005b95) # xflame UID
 set(UID3_ER 0x101f3d6b) # EpocRuntime UID
 
-set(GCC_COMN_DEFS     -D__SYMBIAN32__ -D__GCC32__ -D__EPOC32__ -D__MARM__ -D__MARM_ARMI__)
-set(GCC_MODE_DEFS     -DNDEBUG -D_UNICODE)
-set(GCC_DEFS          ${GCC_COMN_DEFS} ${GCC_MODE_DEFS})
+set(GCC_COMN_DEFS -D__SYMBIAN32__ -D__GCC32__ -D__EPOC32__ -D__MARM__ -D__MARM_ARMI__)
+set(GCC_MODE_DEFS -DNDEBUG -D_UNICODE)
+set(GCC_DEFS      ${GCC_COMN_DEFS} ${GCC_MODE_DEFS})
 
 set(SRC_DIR       "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(EAUDIOLIB_DIR "${SRC_DIR}/EAudioLib")
