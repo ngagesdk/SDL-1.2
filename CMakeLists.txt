@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.00)
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/symbian-6.1-series60-toolchain.cmake)
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/ngage-toolchain.cmake)
 
 project(xflame C CXX)
 
