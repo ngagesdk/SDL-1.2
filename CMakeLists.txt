@@ -48,7 +48,7 @@ add_library(xflame STATIC ${xflame_sources})
 build_exe(${PROJECT_NAME} exe ${UID1} ${UID2} ${UID3} "${xflame_libs}")
 
 if(INSTALL_APP)
-    install_file(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR} xflame.exe      ${MMC_DRIVE_LETTER})
+    install_file(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR} xflame.exe ${MMC_DRIVE_LETTER})
 endif()
 
 add_dependencies(
