@@ -41,7 +41,6 @@ set(xflame_libs
 
 set(xflame_sources
     "${SRC_DIR}/xflame.c")
-#    "${SDL_DIR}/test/graywin.c")
 
 set(EAudioLib_sources
     "${EAUDIOLIB_DIR}/src/audiolib.cpp"
@@ -143,7 +142,7 @@ add_library(EAudioLib   STATIC ${EAudioLib_sources})
 add_library(EpocRuntime STATIC ${EpocRuntime_sources})
 add_library(SDLmain     STATIC ${SDLmain_sources})
 add_library(SDL         STATIC ${SDL_sources})
-add_library(xflame      STATIC ${xflame_sources})
+add_library(xflame     STATIC ${xflame_sources})
 
 build_exe(${PROJECT_NAME} exe ${UID1_GW} ${UID2} ${UID3_GW} "${xflame_libs}")
 #build_dll(arm_interwork EpocRuntime dll ${UID1_ER} ${UID2} ${UID3_ER} "${EpocRuntime_libs}")
