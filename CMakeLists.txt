@@ -43,7 +43,7 @@ set(xflame_libs
 set(xflame_sources
     "${SRC_DIR}/xflame.c")
 
-add_library(xflame     STATIC ${xflame_sources})
+add_library(xflame STATIC ${xflame_sources})
 
 build_exe(${PROJECT_NAME} exe ${UID1} ${UID2} ${UID3} "${xflame_libs}")
 
