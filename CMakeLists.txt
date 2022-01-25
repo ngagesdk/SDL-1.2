@@ -74,7 +74,7 @@ target_compile_definitions(
 target_include_directories(
     xflame
     PUBLIC
-    ${SDL_DIR}/include)
+    ${SDL_INC_DIR})
 
 target_link_libraries(
     xflame
