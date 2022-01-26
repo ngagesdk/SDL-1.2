@@ -1,0 +1,17 @@
+{
+    "version": "0.2.1",
+    "defaults": {},
+    "configurations":
+    [
+        {
+            "type": "default",
+            "project": "..\\..\\sdk\\EKA2L1\\eka2l1_qt.exe",
+            "name": "xflame.exe",
+            "args":
+            [
+                "--app",
+                "E:\\xflame.exe"
+            ]
+        }
+    ]
+}
