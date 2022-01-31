@@ -3,7 +3,7 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/ngage-toolchain
 
 project(xflame C CXX)
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/SDL.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/SDL12.cmake")
 include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/SDLmain.cmake")
 include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/SDL_epocruntime.cmake")
 include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/EAudioLib.cmake")
@@ -25,7 +25,7 @@ set(GCC_DEFS      ${GCC_COMN_DEFS} ${GCC_MODE_DEFS})
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 set(xflame_libs
-    ${CMAKE_CURRENT_BINARY_DIR}/libSDL.a
+    ${CMAKE_CURRENT_BINARY_DIR}/libSDL12.a
     ${CMAKE_CURRENT_BINARY_DIR}/libSDLmain.a
     ${CMAKE_CURRENT_BINARY_DIR}/libEAudioLib.a
     ${CMAKE_CURRENT_BINARY_DIR}/libSDL_epocruntime.a
@@ -61,7 +61,7 @@ add_dependencies(
     EAudioLib
     SDL_epocruntime
     SDLmain
-    SDL)
+    SDL12)
 
 add_dependencies(
     xflame.exe
@@ -79,7 +79,7 @@ target_compile_definitions(
 target_include_directories(
     xflame
     PUBLIC
-    ${SDL_INC_DIR})
+    ${SDL12_INC_DIR})
 
 target_link_libraries(
     xflame
