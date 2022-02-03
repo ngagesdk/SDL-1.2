@@ -1,12 +1,18 @@
 cmake_minimum_required(VERSION 3.00)
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/ngage-toolchain.cmake)
+
+if(DEFINED ENV{NGAGESDK})
+    SET(NGAGESDK $ENV{NGAGESDK})
+    set(CMAKE_TOOLCHAIN_FILE ${NGAGESDK}/cmake/ngage-toolchain.cmake)
+else()
+    message(FATAL_ERROR "The environment variable NGAGESDK needs to be defined.")
+endif()
 
 project(xflame C CXX)
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/SDL12.cmake")
-include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/SDLmain.cmake")
-include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/SDL_epocruntime.cmake")
-include("${CMAKE_CURRENT_SOURCE_DIR}/../../modules/EAudioLib.cmake")
+include(SDL12)
+include(SDLmain)
+include(SDL_epocruntime)
+include(EAudioLib)
 
 set(MMC_DRIVE_LETTER "E")
 
