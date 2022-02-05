@@ -1,9 +1,10 @@
 This is an outdated port of SDL 1.2 by Hannu Viitala, Kimmo Kinnunen and
 Markus Mertama that has been updated to work with this toolchain.
 
-Besides the use as module for the SDK, this repository also includes the
-demo application xflame by Carsten Haitzler which was ported to SDL by
-Sam Lantinga.
+Besides the use as module with the
+[ngage-toolchain](https://github.com/ngagesdk/ngage-toolchain), this
+repository also includes the demo application xflame by Carsten Haitzler
+which was ported to SDL by Sam Lantinga.
 
 Our SDL 2.0.x porting efforts can be found here:
 
