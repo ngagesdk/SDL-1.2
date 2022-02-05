@@ -1,5 +1,5 @@
 This is an outdated port of SDL 1.2 by Hannu Viitala, Kimmo Kinnunen and
-Markus Mertama that has been updated to work with this toolchain.
+Markus Mertama.
 
 Besides the use as module with the
 [ngage-toolchain](https://github.com/ngagesdk/ngage-toolchain), this
