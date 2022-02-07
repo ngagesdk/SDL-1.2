@@ -6,6 +6,7 @@
         {
             "type": "default",
             "project": "..\\..\\sdk\\eka2l1\\eka2l1_qt.exe",
+            "projectTarget": "xflame.exe",
             "name": "xflame.exe",
             "args":
             [

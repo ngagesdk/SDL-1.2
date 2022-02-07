@@ -14,10 +14,7 @@ include(SDLmain)
 include(SDL_epocruntime)
 include(EAudioLib)
 
-set(MMC_DRIVE_LETTER "E")
-
 # Use CMake or Visual Studio to enable these settings.
-option(INSTALL_APP    "Install app on MMC"     OFF)
 option(INSTALL_EKA2L1 "Install app for EKA2L1" OFF)
 
 set(UID1 0x1000007a) # KExecutableImageUidValue, e32uid.h
@@ -53,10 +50,6 @@ set(xflame_sources
 add_library(xflame STATIC ${xflame_sources})
 
 build_exe(xflame exe ${UID1} ${UID2} ${UID3} "${xflame_libs}")
-
-if(INSTALL_APP)
-    install_file(xflame.exe xflame ${CMAKE_CURRENT_BINARY_DIR} xflame.exe ${MMC_DRIVE_LETTER})
-endif()
 
 if(INSTALL_EKA2L1)
     copy_file(xflame.exe ${CMAKE_CURRENT_BINARY_DIR} ${EKA2L1_E_DRIVE} xflame.exe)
